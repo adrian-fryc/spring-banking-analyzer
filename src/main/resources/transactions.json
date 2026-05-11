@@ -1,0 +1,16 @@
+[
+  {
+    "id" : "1",
+    "amount" : 100.00,
+    "currency" : "PLN",
+    "date" : "2026-04-01",
+    "category" : "FOOD"
+  },
+  {
+    "id" : "2",
+    "amount" : 50.00,
+    "currency" : "PLN",
+    "date" : "2026-04-01",
+    "category" : "FOOD"
+  }
+]
