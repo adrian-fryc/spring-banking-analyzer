@@ -1,5 +1,6 @@
 package pl.mentor.banking.analyzer.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class TransactionController {
 
     @PostMapping("/api/transactions")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTransaction(@RequestBody CreateTransactionRequest dtoTransaction) {
+    public void addTransaction(@Valid @RequestBody CreateTransactionRequest dtoTransaction) {
         log.info("Adding new transaction: {}", dtoTransaction);
         transactionService.addTransaction(dtoTransaction);
     }

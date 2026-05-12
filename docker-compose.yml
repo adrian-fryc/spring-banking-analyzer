@@ -1,0 +1,15 @@
+services:           # Tu definiujemy listę naszych usług (bazę, serwer itp.)
+  db:               # Nazwa usługi (może być dowolna, np. "postgres-container")
+    image: postgres:16-alpine  # Obraz z Docker Hub (wersja 16, alpine to wersja "light")
+    container_name: banking-db # Nazwa widoczna w Docker Desktop
+    ports:
+      - "5432:5432" # Mapowanie portów
+    environment:    # Tu dzieje się "magia" tworzenia bazy
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=analyzer_db
+    volumes:        # Bardzo ważne! Bez tego po restarcie kontenera dane znikną
+      - db_data:/var/lib/postgresql/data
+    restart: always
+volumes:            # Definicja wolumenu (miejsce na dysku Twojego PC)
+  db_data:
