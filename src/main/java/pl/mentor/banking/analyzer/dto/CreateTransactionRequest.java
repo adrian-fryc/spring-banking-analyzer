@@ -1,9 +1,6 @@
 package pl.mentor.banking.analyzer.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import pl.mentor.banking.analyzer.model.TransactionCategory;
 
 import java.math.BigDecimal;
@@ -17,6 +14,7 @@ public record CreateTransactionRequest(
 
         @NotBlank(message = "Currency is required")
         @Size(min = 3, max = 3, message = "Currency must be 3 characters long (e.g., PLN)")
+        @Pattern(regexp = "[A-Z]{3}", message = "Currency must be in uppercase")
         String currency,
 
         @NotNull(message = "Date is required")
