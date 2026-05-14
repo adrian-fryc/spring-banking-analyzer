@@ -3,6 +3,7 @@ package pl.mentor.banking.analyzer.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,7 +26,9 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable) // Wyłączamy CSRF dla REST API
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().authenticated() // Każde zapytanie wymaga logowania
+                                .requestMatchers(HttpMethod.GET, "/api/transactions/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/transactions/**").hasRole("ADMIN")
+                                .anyRequest().authenticated() // Każde zapytanie wymaga logowania
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Nie twórz sesji w RAM serwera
@@ -34,16 +37,16 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        // Tworzymy użytkownika technicznego
-        UserDetails user = User.withUsername("user")
-                .password(encoder.encode("password")) // Hasło będzie zahashowane
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+//        // Tworzymy użytkownika technicznego
+//        UserDetails user = User.withUsername("user")
+//                .password(encoder.encode("password")) // Hasło będzie zahashowane
+//                .roles("USER")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
