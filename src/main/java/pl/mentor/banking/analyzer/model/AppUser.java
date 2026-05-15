@@ -1,10 +1,10 @@
 package pl.mentor.banking.analyzer.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,5 +21,8 @@ public class AppUser {
     @Column(nullable = false)
     private String password;
     private String role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Transaction> transactions = new ArrayList<>();
 
 }

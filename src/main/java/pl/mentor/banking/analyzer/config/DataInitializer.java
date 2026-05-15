@@ -8,6 +8,8 @@ import pl.mentor.banking.analyzer.model.AppUser;
 import pl.mentor.banking.analyzer.repository.UserRepository;
 import pl.mentor.banking.analyzer.security.CustomUserDetailsService;
 
+import java.util.List;
+
 @Slf4j
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -28,7 +30,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("admin123"));
             admin.setRole("ADMIN");
-
+            admin.setTransactions(List.of());
             userRepository.save(admin);
             log.info("Admin user created");
         }else{
@@ -40,7 +42,7 @@ public class DataInitializer implements CommandLineRunner {
             user.setUsername("user");
             user.setPassword(passwordEncoder.encode("user123"));
             user.setRole("USER");
-
+            user.setTransactions(List.of());
             userRepository.save(user);
             log.info("USER user created");
         }else{
